@@ -19,6 +19,7 @@ import UpdateProductPage from "../Page/AdminPage/UpdateProductPage";
 import AdminDashboardPage from "../Page/AdminPage/AdminDashboardPage";
 import Brands from "../Page/AdminPage/Brands";
 import AromaManagement from "../Page/AdminPage/AromaManagement";
+import ReviewManagementPage from "../Page/AdminPage/ReviewManagementPage";
  
 const router = createBrowserRouter([
   {
@@ -52,6 +53,7 @@ const router = createBrowserRouter([
       { path: "/admin/category", element: <CategoryPage /> },
       { path: "/admin/brand", element: <Brands /> },
       { path: "/admin/aroma", element: <AromaManagement /> },
+      { path: "/admin/reviews", element: <ReviewManagementPage /> },
       { path: "/admin/all-orders", element: <AllOrdersPage /> },
       { path: "/admin/orders/:id", element: <OrderDetailsPage /> },
       { path: "/admin/all-products", element: <AllProductsPage /> },

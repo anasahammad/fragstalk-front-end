@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ChevronDown,
   ChevronUp,
@@ -7,6 +7,8 @@ import {
   ArrowUp,
   Heart,
   MessagesSquare,
+  Camera,
+  Star,
 } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -21,20 +23,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToWishlist, removeFromWishlist } from "../../store/actions/wishlistAction";
 import toast from "react-hot-toast";
 import { addTocart } from "../../store/actions/cartAction";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { motion } from 'framer-motion';
+import { Rating } from 'react-simple-star-rating'
+import DropdownSection from "../DropdownSection";
+
 
 const ProductDetails = () => {
   
   const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
   const [showDescription, setShowDescription] = useState(false);
-  const [wishlist, setWishlist] = useState(false);
+  const [showReviews, setShowReviews] = useState(false);
+  const [isWishlist, setIsWishlist] = useState(false);
   const [agreed, setAgreed] = useState(false);
   const navigate = useNavigate();
   const [click, setClick] = useState(false);
+  const [isCart, setIsCart] = useState(false);
   const dispatch = useDispatch();
   const {cart} = useSelector((state)=>state.cart)
   const { id } = useParams();
+  const {wishlist} = useSelector((state)=>state.wishlist)
   const [orderProduct, setOrderProduct] = useState(null);
   // const products = [
   //   {
@@ -102,10 +111,78 @@ const product = products.find((item) => item._id === id);
 
 const [quantity, setQuantity] = useState(product?.qty || 1);
 
+const [reviews, setReviews] = useState([]);
+const [newReview, setNewReview] = useState({ name: '', email: '', rating: 4, review: '' });
+
+
+
+
+const {data=[], refetch} = useQuery({
+  queryKey: 'reviews',
+  queryFn: async() => {
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/review/${id}`);
+    setReviews(response.data);
+    return response.data;
+  }
+
+})
+
+const addReviewMutation = useMutation({
+  mutationFn: async (formData) => {
+    const response = await axios.post(`${import.meta.env.VITE_API_URL}/review/${id}`, formData);
+    return response.data;
+  }, 
+  onSuccess: (data) => {
+    setReviews([...reviews, data]);
+    toast.success(data.message);
+  },
+  onError: (error) => {
+    console.error('Error submitting review:', error);
+    toast.error(error.response.data.message);
+  }
+})
+const handleReviewSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const formData = new FormData();
+    formData.append('name', newReview.name);
+    formData.append('email', newReview.email);
+    formData.append('rating', newReview.rating);
+    formData.append('review', newReview.review);
+    
+  
+    addReviewMutation.mutate(newReview);
+    
+    refetch(); // Refresh reviews after submission
+    setNewReview({ name: '', email: '', rating: 4, review: '', attachment: null });
+    toast.success('Review submitted successfully');
+  } catch (error) {
+    console.error('Error submitting review:', error);
+    toast.error('Failed to submit review');
+  }
+};
   const handleBuyProduct = () => {  
     navigate("/checkout", { state: { product: [orderProduct] } });
   };
   console.log("product",product);
+
+    useEffect(() => {
+      const isExistInWishList = wishlist.find((item) => item._id === product._id);
+      if (isExistInWishList) {
+        setIsWishlist(true);
+      }else{
+        setIsWishlist(false);
+      }
+    }, [wishlist]);
+  
+    useEffect(() => {
+      const isExistInCart = cart.find((item) => item._id === product._id);
+      if (isExistInCart) {
+        setIsCart(true);
+      }else{
+        setIsCart(false);
+      }
+    }, [cart]);
   if (!product) {
     return <div>Product not found</div>;
   }
@@ -132,6 +209,7 @@ const [quantity, setQuantity] = useState(product?.qty || 1);
     ];
  
 
+    
     const handleWishlistToggle = (data) => {
       if (click) {
         dispatch(removeFromWishlist(data));
@@ -144,10 +222,12 @@ const [quantity, setQuantity] = useState(product?.qty || 1);
     };
 
     
-  const handleAddToCart = (id) => {
-    const isItemExists = cart.find((item) => item._id === id);
-    if (isItemExists) {
+    
+  const handleAddToCart = () => {
+    
+    if (isCart) {
       toast.error("Item already exists in the cart");
+      
     } else {
       dispatch(addTocart(product));
       toast.success("Item added to cart");
@@ -292,7 +372,7 @@ const [quantity, setQuantity] = useState(product?.qty || 1);
           {/* Action Buttons */}
           <div className="space-y-3">
             <button
-            onClick={() => handleAddToCart(product.id)}
+            onClick={() => handleAddToCart()}
               className={`w-full py-3 rounded-md text-white ${
                 agreed ? "bg-black hover:bg-gray-800" : "bg-gray-400 cursor-not-allowed"
               }`}
@@ -333,74 +413,161 @@ const [quantity, setQuantity] = useState(product?.qty || 1);
 
          
 
-          {/* Additional Information */}
-          <div className="border-t pt-4">
-            <button
-              onClick={() => setShowAdditionalInfo(!showAdditionalInfo)}
-              className="flex justify-between items-center w-full py-2"
-            >
-              <span className="font-medium">Description</span>
-              {showAdditionalInfo ? (
-                <ChevronUp className="w-5 h-5" />
-              ) : (
-                <ChevronDown className="w-5 h-5" />
-              )}
-            </button>
-            {showAdditionalInfo && (
-              <div className="mt-4 space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <h3 className="font-medium">Dimensions:</h3>
-                   {product.details.map(item=> <p key={item.key}>{item.key}</p>)}
-                  
-                  </div>
-                  <div className="space-y-2">
-                    <h3 className="font-medium">Materials:</h3>
-                   
-
-{product.details.map(item=> <p key={item.key}>{item.value}</p>)}
-                  </div>
-                </div>
-
-                
-              </div>
-            )}
-          </div>
-
-           {/* Description Section */}
-           <div className="border-t pt-4">
-            <button
-              onClick={() => setShowDescription(!showDescription)}
-              className="flex justify-between items-center w-full py-2"
-            >
-              <span className="font-medium">Additional Information</span>
-              {showDescription ? (
-                <ChevronUp className="w-5 h-5" />
-              ) : (
-                <ChevronDown className="w-5 h-5" />
-              )}
-            </button>
-            {showDescription && (
-              <div className="mt-4">
-                      
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <h3 className="font-medium">Name:</h3>
-                   {product.additional.map(item=> <p key={item.key}>{item.key}</p>)}
-                  
-                  </div>
-                  <div className="space-y-2">
-                    <h3 className="font-medium">Value:</h3>
-                   
-
-{product.additional.map(item=> <p key={item.key}>{item.value}</p>)}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+         
         </div>
       </div>
+    </div>
+
+    {/* product details */}
+
+    <div className=" min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-7xl mx-auto   overflow-hidden"
+      >
+        <div className="p-8 bg-gradient-to-r from-purple-600 to-pink-600">
+          <h2 className="text-3xl font-bold text-center text-white">Product Details</h2>
+        </div>
+        
+        <div className="p-8 space-y-8">
+          <DropdownSection
+            title="Description"
+            isOpen={showDescription}
+            setIsOpen={setShowDescription}
+          >
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <h3 className="font-medium text-purple-700">Dimensions:</h3>
+                {product.details.map(item => <p key={item.key} className="text-gray-600">{item.key}</p>)}
+              </div>
+              <div className="space-y-2">
+                <h3 className="font-medium text-pink-700">Materials:</h3>
+                {product.details.map(item => <p key={item.key} className="text-gray-600">{item.value}</p>)}
+              </div>
+            </div>
+          </DropdownSection>
+
+          <DropdownSection
+            title="Additional Information"
+            isOpen={showAdditionalInfo}
+            setIsOpen={setShowAdditionalInfo}
+          >
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <h3 className="font-medium text-purple-700">Name:</h3>
+                {product.additional.map(item => <p key={item.key} className="text-gray-600">{item.key}</p>)}
+              </div>
+              <div className="space-y-2">
+                <h3 className="font-medium text-pink-700">Value:</h3>
+                {product.additional.map(item => <p key={item.key} className="text-gray-600">{item.value}</p>)}
+              </div>
+            </div>
+          </DropdownSection>
+
+          <DropdownSection
+            title={`Customer Reviews (${reviews.length})`}
+            isOpen={showReviews}
+            setIsOpen={setShowReviews}
+          >
+            <div className="space-y-6">
+              {reviews.map((item, index) => 
+              (
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                  className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-6 shadow-md hover:shadow-lg transition-all duration-300"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                   <div>
+                   <h3 className="font-semibold text-lg text-gray-800">{item.name}- <span>{item.status === 'approved'? "Verified": ''}</span> <span className="text-sm text-gray-500">{new Date(item.createdAt).toUTCString()}</span></h3>
+                   <p className="text-sm">{item.email}</p>
+                   </div>
+                    <div className="flex">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`w-5 h-5 ${i < item.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <p className="text-gray-600 mb-4">{item.review}</p>
+                  
+                </motion.div>
+              ))}
+            </div>
+          </DropdownSection>
+
+          <div className="bg-gradient-to-r from-purple-100 to-pink-100 p-8 rounded-2xl shadow-lg">
+            <h3 className="text-2xl font-semibold mb-6 text-center text-gray-800">Add Your Review</h3>
+            <form onSubmit={handleReviewSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                  <input
+                    id="name"
+                    type="text"
+                    value={newReview.name}
+                    onChange={(e) => setNewReview({...newReview, name: e.target.value})}
+                    required
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={newReview.email}
+                    onChange={(e) => setNewReview({...newReview, email: e.target.value})}
+                    required
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Rating</label>
+                <div className="flex space-x-1">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      type="button"
+                      onClick={() => setNewReview({...newReview, rating: star})}
+                      className={`p-1 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 ${
+                        star <= newReview.rating ? 'text-yellow-400 transform scale-110' : 'text-gray-300'
+                      }`}
+                    >
+                      <Star className="w-8 h-8 fill-current" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <label htmlFor="review" className="block text-sm font-medium text-gray-700 mb-1">Comment</label>
+                <textarea
+                  id="review"
+                  value={newReview.review}
+                  onChange={(e) => setNewReview({...newReview, review: e.target.value})}
+                  required
+                  rows={4}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+                />
+              </div>
+              
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 px-4 rounded-md hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+              >
+                Submit Review
+              </button>
+            </form>
+          </div>
+        </div>
+      </motion.div>
     </div>
     <div className="py-16   relative">
         <div className=" px-4">
@@ -441,7 +608,11 @@ const [quantity, setQuantity] = useState(product?.qty || 1);
           </div>
         </div>
       </div>
+
+
+      
   <RelatedProduct/>
+
     </ScrollToTop>
   );
 };

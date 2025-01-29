@@ -154,7 +154,7 @@
 import  { useState, useEffect } from 'react';
 import { Instagram, Facebook, Youtube, Search, User, Heart, ShoppingCart, Menu, X, ChevronDown } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-
+import { getUserByIdForUser } from "../../services";
 
 import { useSelector } from 'react-redux';
 import Cart from './Cart';
@@ -189,9 +189,9 @@ const userId = existingUser?.user._id;
 useEffect(() => {
   const fetchUser = async () => {
     try {
-      // const userData = await getUserByIdForUser(userId);
-      // console.log("userData " ,userData);
-      // setAccount(userData);
+      const userData = await getUserByIdForUser(userId);
+      console.log("userData " ,userData);
+      setAccount(userData);
     } catch (err) {
       // setError(err.message);
     }

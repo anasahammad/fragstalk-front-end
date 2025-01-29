@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CarTaxiFront, Heart, ShoppingBag } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToWishlist, removeFromWishlist } from '../../store/actions/wishlistAction';
+import toast from 'react-hot-toast';
+import { addTocart } from '../../store/actions/cartAction';
 
 // const products = {
 //   bestSeller: [
@@ -48,7 +52,55 @@ import { Link } from 'react-router-dom';
 
 export const ProductCard = ({ product }) => {
   const [isWishlist, setIsWishlist] = useState(false);
- 
+  const [click, setClick] = useState(false);
+  const [isCart, setCart] = useState(false);
+  const dispatch = useDispatch();
+  const {cart} = useSelector((state)=>state.cart)
+  const {wishlist} = useSelector((state)=>state.wishlist)
+
+  useEffect(() => {
+    const isExistInWishList = wishlist.find((item) => item._id === product._id);
+    if (isExistInWishList) {
+      setIsWishlist(true);
+    }else{
+      setIsWishlist(false);
+    }
+  }, [wishlist]);
+
+  useEffect(() => {
+    const isExistInCart = cart.find((item) => item._id === product._id);
+    if (isExistInCart) {
+      setCart(true);
+    }else{
+      setCart(false);
+    }
+  }, [cart]);
+
+  const handleWishlistToggle = (data) => {
+      
+      if (click) {
+        dispatch(removeFromWishlist(data));
+        toast.error("Product removed from wishlist");
+      } else {
+        dispatch(addToWishlist(data));
+       
+        toast.success("Product added to wishlist");
+      }
+      setClick(!click);
+    };
+
+    const handleAddToCart = (id) => {
+      const isItemExists = cart.find((item) => item._id === id);
+      if (isItemExists) {
+        setCart(true);
+        toast.error("Item already exists in the cart");
+      } else {
+        dispatch(addTocart(product));
+        setCart(true);
+        toast.success("Item added to cart");
+      }
+    };
+
   return (
     <div className="relative group">
       <div className="relative">
@@ -78,15 +130,15 @@ export const ProductCard = ({ product }) => {
        
         </div>
         <button 
-          onClick={() => setIsWishlist(!isWishlist)}
+          onClick={()=>{handleAddToCart(product._id)}}
           className="absolute top-12 right-2 p-2 rounded-full bg-white shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
         >
           <ShoppingBag
-            className={`w-5 h-5 ${isWishlist ? 'fill-red-500 text-red-500' : 'text-gray-600'}`}
+            className={`w-5 h-5 ${isCart ? 'fill-red-500 text-red-500' : 'text-gray-600'}`}
           />
         </button>
         <button 
-          onClick={() => setIsWishlist(!isWishlist)}
+          onClick={()=>{handleWishlistToggle(product)}}
           className="absolute top-2 right-2 p-2 rounded-full bg-white shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
         >
           <Heart 

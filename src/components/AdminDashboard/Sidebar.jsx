@@ -52,6 +52,9 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           <NavLink to="/admin/aroma" className={({ isActive }) => `flex items-center py-2 px-4 rounded transition-colors duration-200 ${isActive ? 'bg-blue-600' : 'hover:bg-gray-700'}`}>
             <MdOutlineCategory className="mr-3" /> Aroma Management
           </NavLink>
+          <NavLink to="/admin/reviews" className={({ isActive }) => `flex items-center py-2 px-4 rounded transition-colors duration-200 ${isActive ? 'bg-blue-600' : 'hover:bg-gray-700'}`}>
+            <MdOutlineCategory className="mr-3" /> Review Management
+          </NavLink>
         </nav>
       </div>
       <button onClick={handleLogout} className="absolute bottom-4 left-4 flex items-center py-2 px-4 bg-red-600 text-white rounded hover:bg-red-700 transition-colors duration-200">
