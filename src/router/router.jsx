@@ -20,6 +20,8 @@ import AdminDashboardPage from "../Page/AdminPage/AdminDashboardPage";
 import Brands from "../Page/AdminPage/Brands";
 import AromaManagement from "../Page/AdminPage/AromaManagement";
 import ReviewManagementPage from "../Page/AdminPage/ReviewManagementPage";
+import ProductByCategory from "../Page/ProductByCategory";
+import ProductsByAroma from "../Page/productsbyAroma";
  
 const router = createBrowserRouter([
   {
@@ -30,6 +32,8 @@ const router = createBrowserRouter([
       { path: "/productdetails/:id", element: <ProductDetails /> },
       { path: "/checkout", element: <CheckoutPage /> },
       {path:"/page/helpcenter", element:<HelpCenter/> },
+      {path:"/categories/:id", element:<ProductByCategory/> },
+      {path:"/notes/:id", element:<ProductsByAroma/> },
       {path:"/page/contactus", element:<ContactPage/>},
       {path:"/page/login", element:<Login/> }
     ],

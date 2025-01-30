@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // const categories = [
 //   {
@@ -73,9 +74,9 @@ const ShopByNotes = () => {
               />
               
               {/* Category Name */}
-              <div className="absolute bottom-0 left-0 right-0 bg-[#1C1047] bg-opacity-90 font-semibold hover:bg-opacity-20 text-white text-center py-2 text-sm">
+              <Link to={`/notes/${category._id}`} className="absolute bottom-0 left-0 right-0 bg-[#1C1047] bg-opacity-90 font-semibold hover:bg-opacity-20 text-white text-center py-2 text-sm">
                 {category.name}
-              </div>
+              </Link>
             </div>
           </div>
         ))}

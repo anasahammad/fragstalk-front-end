@@ -159,6 +159,8 @@ import { getUserByIdForUser } from "../../services";
 import { useSelector } from 'react-redux';
 import Cart from './Cart';
 import Wishlist from './Wishlist';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -202,31 +204,46 @@ useEffect(() => {
 console.log("account data ",account);
  
 
+const {data:brands=[]} = useQuery({
+  queryKey: ['brands'],
+  queryFn: async()=>{
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/brand`);
+    return response.data;
+  }
+})
+
+const {data:categories=[]} = useQuery({
+  queryKey: ['categories'],
+  queryFn: async()=>{
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/category`);
+    return response.data;
+  }})
+
   const navigationItems = [
     { title: 'HOME', path: '/' },
     { 
       title: 'SHOP BY BRANDS', 
       path: '/brands',
-      submenu: [
-        { title: 'Brand 1', path: '/brands/1' },
-        { title: 'Brand 2', path: '/brands/2' },
-        { title: 'Brand 3', path: '/brands/3' },
-      ]
+      submenu: brands.map((brand)=>({
+        title: brand.name,
+        path: `/brands/${brand._id}`,
+      }))
+        
     },
     { 
       title: 'SHOP BY CATEGORIES', 
       path: '/categories',
-      submenu: [
-        { title: 'Category 1', path: '/categories/1' },
-        { title: 'Category 2', path: '/categories/2' },
-        { title: 'Category 3', path: '/categories/3' },
-      ]
+      submenu:categories.map((category)=>({
+        title: category.name,
+        path: `/categories/${category._id}`,
+      })) 
     },
     { title: 'NEW ARRIVALS', path: '/new-arrivals' },
     { title: 'BEST SELLERS', path: '/best-sellers' },
     { title: 'BLOG', path: '/blog' },
     { title: 'CONTACT US', path: '/contact' },
   ];
+
 
   return (
     <div className="relative">
