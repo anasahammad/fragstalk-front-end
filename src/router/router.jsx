@@ -22,6 +22,7 @@ import AromaManagement from "../Page/AdminPage/AromaManagement";
 import ReviewManagementPage from "../Page/AdminPage/ReviewManagementPage";
 import ProductByCategory from "../Page/ProductByCategory";
 import ProductsByAroma from "../Page/productsbyAroma";
+import CustomerBanner from "../Page/AdminPage/CustomerBanner";
  
 const router = createBrowserRouter([
   {
@@ -62,6 +63,7 @@ const router = createBrowserRouter([
       { path: "/admin/orders/:id", element: <OrderDetailsPage /> },
       { path: "/admin/all-products", element: <AllProductsPage /> },
       { path: "/admin/products/:id/edit", element: <UpdateProductPage /> },
+      { path: "/admin/banner", element: <CustomerBanner /> },
      
     ],
   },

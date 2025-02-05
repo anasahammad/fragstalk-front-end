@@ -1,52 +1,47 @@
-import { FaFacebookF, FaInstagram, FaPinterestP, FaYoutube, FaTwitter } from 'react-icons/fa';
- 
-export default function Footer() {
+import { FaFacebookF, FaInstagram, FaPinterestP, FaYoutube, FaTwitter, FaSprayCan } from 'react-icons/fa';
+
+const Footer = () => {
   return (
-    <footer className="w-full bg-purple-700 text-gray-100">
+    <footer className="w-full bg-indigo-900 text-gray-100">
       {/* Newsletter Section */}
       <div className="container mx-auto px-4 py-8">
         <div className="text-center mb-8">
           <h2 className="text-2xl md:text-3xl font-bold italic mb-4">
-            Discover The Latest Furniture Trends & Exclusive Deals – Stay Updated!
+            Discover The Latest Fragrances & Exclusive Deals – Stay Updated!
           </h2>
           <div className="flex flex-col lg:flex-row max-w-xl mx-auto gap-4">
             <input
               type="email"
               placeholder="Your email address"
-              className="flex-1 px-4 py-2 border rounded-md"
+              className="flex-1 px-4 py-2 border rounded-md text-gray-800"
             />
-            <button className="px-2 py-2 bg-black text-white rounded-md hover:bg-gray-800">
+            <button className="px-2 py-2 bg-pink-500 text-white rounded-md hover:bg-pink-600">
               Subscribe
             </button>
           </div>
         </div>
 
-      
-
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 py-8 border-t">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 py-8 border-t border-indigo-800">
           {/* Company Info */}
           <div>
-            <img
-              src="/logo-1-2.png"
-              alt="Fragstalk "
-              width={80}
-              height={80}
-              className="mb-4"
-            />
-            <p className="text-sm mb-2">Akrain Biruliya Savar, Dhaka, Bangladesh</p>
+            <div className="flex items-center mb-4">
+              <FaSprayCan className="text-pink-500 w-8 h-8 mr-2" />
+              <span className="text-2xl font-bold">Scent Zone</span>
+            </div>
+            <p className="text-sm mb-2">123 Fragrance Lane, Aroma City, AC 12345</p>
             <p className="text-sm mb-2">
-              Call us: <p href="tel:+8801710724266" className="hover:underline">+8801733550682</p>
+              Call us: <a href="tel:+1234567890" className="hover:underline">+1 (234) 567-890</a>
             </p>
             <p className="text-sm mb-4">
-              Email: <p href="mailto:pramanikfurniture641@gmail.com" className="hover:underline">info@gmail.com</p>
+              Email: <a href="mailto:info@scentzone.com" className="hover:underline">info@scentzone.com</a>
             </p>
             <div className="flex gap-4">
-           <a href='https://www.facebook.com/profile.php?id=61571605043376&mibextid=ZbWKwL' target='_blank'> <FaFacebookF  className="w-5 h-5 cursor-pointer hover:text-teal-600" /></a>  
-              <FaInstagram className="w-5 h-5 cursor-pointer hover:text-pink-600" />
-              <FaPinterestP className="w-5 h-5 cursor-pointer hover:text-red-600" />
-              <FaYoutube className="w-5 h-5 cursor-pointer hover:text-red-600" />
-              <FaTwitter className="w-5 h-5 cursor-pointer hover:text-teal-400" />
+              <a href='https://www.facebook.com/scentzone' target='_blank' rel="noopener noreferrer"><FaFacebookF className="w-5 h-5 cursor-pointer hover:text-pink-500" /></a>
+              <a href='https://www.instagram.com/scentzone' target='_blank' rel="noopener noreferrer"><FaInstagram className="w-5 h-5 cursor-pointer hover:text-pink-500" /></a>
+              <a href='https://www.pinterest.com/scentzone' target='_blank' rel="noopener noreferrer"><FaPinterestP className="w-5 h-5 cursor-pointer hover:text-pink-500" /></a>
+              <a href='https://www.youtube.com/scentzone' target='_blank' rel="noopener noreferrer"><FaYoutube className="w-5 h-5 cursor-pointer hover:text-pink-500" /></a>
+              <a href='https://www.twitter.com/scentzone' target='_blank' rel="noopener noreferrer"><FaTwitter className="w-5 h-5 cursor-pointer hover:text-pink-500" /></a>
             </div>
           </div>
 
@@ -55,51 +50,52 @@ export default function Footer() {
             <h3 className="font-bold text-lg mb-4">The Company</h3>
             <ul className="space-y-2">
               {[
-                'About Fragstalk ',
-                'License & Certificates',
+                'About Scent Zone',
+                'Our Perfumers',
                 'Privacy Policy',
                 'Return & Refund Policy',
                 'Shipping Policy',
                 'Terms Of Service'
               ].map((item) => (
                 <li key={item}>
-                  <p href="#" className="text-sm hover:underline">{item}</p>
+                  <a href="#" className="text-sm hover:underline hover:text-pink-500">{item}</a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Need Help? */}
+          {/* Customer Service */}
           <div>
-            <h3 className="font-bold text-lg mb-4">Need Help?</h3>
+            <h3 className="font-bold text-lg mb-4">Customer Service</h3>
             <ul className="space-y-2">
               {[
                 'Contact Us',
-                'Office Location',
-                'Factory Location'
+                'FAQs',
+                'Store Locator',
+                'Gift Cards'
               ].map((item) => (
                 <li key={item}>
-                  <p href="#" className="text-sm hover:underline">{item}</p>
+                  <a href="#" className="text-sm hover:underline hover:text-pink-500">{item}</a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Information */}
+          {/* Fragrances */}
           <div>
-            <h3 className="font-bold text-lg mb-4">Information</h3>
+            <h3 className="font-bold text-lg mb-4">Fragrances</h3>
             <ul className="space-y-2">
               {[
-                'Available Colors List',
-                'Office Furniture Catalogue',
-                'Home Furniture Catalogue',
-                'Academic Furniture Catalogue',
-                'Care & Maintenance',
-                'Customization',
-                'FAQs'
+                'Women\'s Perfumes',
+                'Men\'s Colognes',
+                'Unisex Fragrances',
+                'New Arrivals',
+                'Best Sellers',
+                'Gift Sets',
+                'Fragrance Finder'
               ].map((item) => (
                 <li key={item}>
-                  <p href="#" className="text-sm hover:underline">{item}</p>
+                  <a href="#" className="text-sm hover:underline hover:text-pink-500">{item}</a>
                 </li>
               ))}
             </ul>
@@ -108,9 +104,11 @@ export default function Footer() {
       </div>
 
       {/* Copyright */}
-      <div className="bg-black text-white py-4 text-center text-sm">
-        <p>© {new Date().getFullYear()} Fragstalk. All Rights Reserved</p>
+      <div className="bg-indigo-950 text-white py-4 text-center text-sm">
+        <p>© {new Date().getFullYear()} Scent Zone. All Rights Reserved</p>
       </div>
     </footer>
   );
-}
+};
+
+export default Footer;

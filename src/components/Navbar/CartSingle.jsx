@@ -59,7 +59,7 @@ const CartSingle = ({ data, quantityChangeHanlder }) => {
 
         <div className="select-none">
           <img
-            src={data?.images[0]}
+            src={data.images[0]}
             
             alt="product/image"
             className="w-[80px] h-[80px] ml-4 object-contain transition-transform duration-300 ease-in-out group-hover:scale-105"

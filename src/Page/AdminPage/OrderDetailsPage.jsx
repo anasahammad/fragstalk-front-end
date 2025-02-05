@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { FiTrash2, FiPackage } from 'react-icons/fi';
+import { FiTrash2, FiPackage, FiCreditCard } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
-
-
-
-
-
-
 
 export default function OrderDetailsPage() {
   const { id } = useParams();
@@ -38,7 +32,6 @@ export default function OrderDetailsPage() {
     fetchOrderDetails();
   }, [id, user.token]);
 
-  console.log(order);
   const handleStatusChange = async (e) => {
     const newStatus = e.target.value;
     setUpdatingStatus(true);
@@ -132,7 +125,7 @@ export default function OrderDetailsPage() {
             </div>
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Total Amount</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"> ৳{order.totalAmount.toFixed(2)}</dd>
+              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">৳{order.totalAmount.toFixed(2)}</dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Status</dt>
@@ -148,6 +141,24 @@ export default function OrderDetailsPage() {
                 </span>
               </dd>
             </div>
+            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">Payment Method</dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <span className="capitalize">{order.paymentMethod}</span>
+              </dd>
+            </div>
+            {(order.paymentMethod === 'bkash' || order.paymentMethod === 'nagad') && (
+              <>
+                <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                  <dt className="text-sm font-medium text-gray-500">Transaction ID</dt>
+                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{order.payment.transactionId}</dd>
+                </div>
+                <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                  <dt className="text-sm font-medium text-gray-500">Payment Phone</dt>
+                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{order.payment.phone}</dd>
+                </div>
+              </>
+            )}
           </dl>
         </div>
       </div>
@@ -170,14 +181,14 @@ export default function OrderDetailsPage() {
                     {item.name}
                   </p>
                   <p className="text-sm text-gray-500">
-                    Quantity: {item.qty? item.qty : 1}
+                    Quantity: {item.qty ? item.qty : 1}
                   </p>
                   <p className="text-sm text-gray-500">
-                    Price:  ৳{item.price.toFixed(2)}
+                    Price: ৳{item.price.toFixed(2)}
                   </p>
                 </div>
                 <div className="flex-shrink-0 text-sm font-medium text-gray-900">
-                   ৳{((item.qty?item.qty : 1) * item.price).toFixed(2)}
+                  ৳{((item.qty ? item.qty : 1) * item.price).toFixed(2)}
                 </div>
               </div>
             </li>

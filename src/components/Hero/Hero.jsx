@@ -1,6 +1,8 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 export function Hero() {
   const settings = {
     dots: true,
@@ -19,14 +21,22 @@ export function Hero() {
       }
     ]
   };
+
+  const {data:banners} = useQuery({
+    queryKey: ['banners'],
+    queryFn: async()=>{
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/banner`);
+        return response.data;
+    }
+    })
   return (
      <div className="relative ">
         <div className="relative z-10">
           <Slider {...settings}>
-            {['/../src/assets/banner1.png', '/../src/assets/banner2.png'].map((image, index) => (
+            {banners?.map((image, index) => (
               <div key={index}>
                 <img
-                  src={image || "/placeholder.svg"}
+                  src={image.bannerPhoto || "/placeholder.svg"}
                   alt={`Slide ${index + 1}`}
                   className="w-full h-auto"
                 />

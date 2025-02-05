@@ -285,7 +285,7 @@ const handleReviewSubmit = async (e) => {
               autoplay={{ delay: 1000 }}
               className="mySwiper"
             >
-              {product.images.map((image, index) => (
+              {product?.images.map((image, index) => (
                 <SwiperSlide key={index}>
                   <img
                     src={image}
@@ -394,10 +394,10 @@ const handleReviewSubmit = async (e) => {
           </div>
 
           {/* Additional Features */}
-          <div className="flex items-center gap-4 text-sm text-gray-600">
+          {/* <div className="flex items-center gap-4 text-sm text-gray-600">
             <MessagesSquare className="w-4 h-4" />
             <span>193 customers are viewing this product</span>
-          </div>
+          </div> */}
 
           {/* Shipping Information */}
           <div className="border-t pt-4">
@@ -406,7 +406,7 @@ const handleReviewSubmit = async (e) => {
               <span className="font-medium">Shipping Time</span>
             </div>
             <p className="text-sm text-gray-600">
-              Standard delivery time is between 3 to 10 working days for regular
+              Standard delivery time is between 3 to 5 working days for regular
               orders depending on stock availability and shipping location.
             </p>
           </div>
@@ -611,7 +611,7 @@ const handleReviewSubmit = async (e) => {
 
 
       
-  <RelatedProduct/>
+  {/* <RelatedProduct/> */}
 
     </ScrollToTop>
   );

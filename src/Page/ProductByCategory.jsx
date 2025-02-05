@@ -14,40 +14,7 @@ const ProductByCategory = () => {
   });
   const [sortBy, setSortBy] = useState('featured');
   const {id} = useParams();
-  // Sample product data
-  // const products = [
-  //   {
-  //     id: 1,
-  //     name: "Classic White Shirt",
-  //     price: 49.99,
-  //     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-ARsPnr3MbSK24Nw3SC5mTg4araN5uy.png",
-  //     category: "shirts",
-  //     brand: "Fashion Brand",
-  //     isHot: true,
-  //     isSale: false
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Denim Jeans",
-  //     price: 79.99,
-  //     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-ARsPnr3MbSK24Nw3SC5mTg4araN5uy.png",
-  //     category: "pants",
-  //     brand: "Denim Co",
-  //     isHot: true,
-  //     isSale: false
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Leather Jacket",
-  //     price: 199.99,
-  //     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-ARsPnr3MbSK24Nw3SC5mTg4araN5uy.png",
-  //     category: "outerwear",
-  //     brand: "Leather Luxe",
-  //     isHot: false,
-  //     isSale: true
-  //   },
-  //   // Add more products as needed
-  // ];
+  
 
   const {data =[]} = useQuery({
     queryKey: ['products'],
@@ -95,12 +62,12 @@ const ProductByCategory = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="relative h-64 bg-gradient-to-r from-purple-900 to-purple-700">
+      {/* <div className="relative h-64 bg-gradient-to-r from-purple-900 to-purple-700">
         <div className="absolute inset-0 bg-black/30" />
         <div className="relative z-10 flex items-center justify-center h-full">
           <h1 className="text-4xl font-bold text-white">Men</h1>
         </div>
-      </div>
+      </div> */}
 
       {/* Filters and Sort */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
