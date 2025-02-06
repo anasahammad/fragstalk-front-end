@@ -18,20 +18,20 @@ const ShippingPolicyModal = ({ isOpen, onClose }) => {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-            className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-hidden"
+            className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-hidden text-black"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center p-6 border-b">
-              <h2 className="text-2xl font-bold text-gray-800">Shipping Policy</h2>
+              <h2 className="text-2xl font-bold ">Shipping Policy</h2>
               <button
                 onClick={onClose}
-                className="text-gray-500 hover:text-gray-700 transition-colors"
+                className="  transition-colors"
               >
                 <FiX size={24} />
               </button>
             </div>
             <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
-              <h3 className="text-xl font-semibold mb-4">Pramanik Furniture Shipping Policy</h3>
+              <h3 className="text-xl font-semibold mb-4">Scent Zone Shipping Policy</h3>
 
               <h4 className="text-lg font-semibold mb-2">Delivery Timeframes</h4>
               <ul className="list-disc pl-5 mb-4">
@@ -54,8 +54,8 @@ const ShippingPolicyModal = ({ isOpen, onClose }) => {
 
               <h4 className="text-lg font-semibold mb-2">Payment Terms</h4>
               <ul className="list-disc pl-5 mb-4">
-                <li><strong>Orders Under BDT 50,000:</strong> A 10% confirmation payment is required upon order placement. The remaining balance is due on delivery day.</li>
-                <li><strong>Orders Over BDT 50,000 & Corporate Orders:</strong> A 50% confirmation payment is required.</li>
+                <li><strong>Orders Under BDT 5,000:</strong> A 10% confirmation payment is required upon order placement. The remaining balance is due on delivery day.</li>
+              
               </ul>
 
               <h4 className="text-lg font-semibold mb-2">Order Changes & Cancellations</h4>
@@ -71,7 +71,7 @@ const ShippingPolicyModal = ({ isOpen, onClose }) => {
 
               <h4 className="text-lg font-semibold mb-2">Delivery Delay Penalty</h4>
               <p className="mb-4">
-                <strong>Pramanik Furniture Commitment:</strong> We strive to deliver within our standard timeframe. If your order is delayed beyond 7 days, we'll offer a 0.5% weekly penalty on the order value.
+                <strong>Scent Zone Commitment:</strong> We strive to deliver within our standard timeframe. If your order is delayed beyond 7 days, we'll offer a 0.5% weekly penalty on the order value.
               </p>
 
               <h4 className="text-lg font-semibold mb-2">Inventory Holding Cost</h4>

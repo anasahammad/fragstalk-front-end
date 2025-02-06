@@ -18,14 +18,14 @@ const TermsOfServiceModal = ({ isOpen, onClose }) => {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-            className="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-hidden"
+            className="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-hidden text-black"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center p-6 border-b">
-              <h2 className="text-2xl font-bold text-gray-800">Terms of Service</h2>
+              <h2 className="text-2xl font-bold ">Terms of Service</h2>
               <button
                 onClick={onClose}
-                className="text-gray-500 hover:text-gray-700 transition-colors"
+                className=" transition-colors"
               >
                 <FiX size={24} />
               </button>
@@ -33,7 +33,7 @@ const TermsOfServiceModal = ({ isOpen, onClose }) => {
             <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
               <h3 className="text-xl font-semibold mb-4">Overview</h3>
               <p className="mb-4">
-                This website is owned and operated by Pramanik Furniture. By using this website, you agree to these Terms of Service. If you don't agree, you can't use the website.
+                This website is owned and operated by Scent Zone. By using this website, you agree to these Terms of Service. If you don't agree, you can't use the website.
               </p>
 
               <h3 className="text-xl font-semibold mb-4">Using our website</h3>

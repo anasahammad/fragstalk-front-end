@@ -1,152 +1,92 @@
-import React, { useState } from 'react';
-import { Mail, MapPin, Phone, Clock } from 'lucide-react';
+import React from 'react';
+import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaFacebookF, FaInstagram, FaTwitter } from 'react-icons/fa';
+import ScrollToTop from '../hooks/ScrollToTop';
 
-export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    comment: ''
-  });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-  };
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
+const ContactPage = () => {
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold text-center mb-12">CONTACT</h1>
-      
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        {/* Contact Form */}
-        <div className="bg-white p-6 rounded-lg shadow-sm">
-          <div className="mb-6">
-            <p className="text-gray-700">Have a question or comment?</p>
-            <p className="text-gray-700">Use the form below to send us a message or contact us by mail at:</p>
-          </div>
-          
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Name</label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
-              />
+    <ScrollToTop>
+      <div className="bg-gradient-to-br from-indigo-100 to-pink-100 min-h-screen py-12  mt-10">
+        <div className=" mx-auto">
+          <div className="bg-white   overflow-hidden">
+            <div className="bg-gradient-to-r from-indigo-600 to-purple-600 py-8 px-8 relative">
+              <div className="absolute inset-0 opacity-20 bg-pattern"></div>
+              <h1 className="text-4xl font-bold text-white relative z-10">Contact Us</h1>
+              <p className="mt-2 text-indigo-200 relative z-10">Get in touch with Scent Zone</p>
             </div>
+            
+            <div className="p-8 md:flex">
+              <div className="md:w-1/2 space-y-6 mb-8 md:mb-0">
+                <div className="flex items-start bg-indigo-50 p-4 rounded-lg transition-all duration-300 hover:shadow-md">
+                  <FaMapMarkerAlt className="flex-shrink-0 h-6 w-6 text-indigo-600" />
+                  <div className="ml-3 text-base">
+                    <p className="font-medium text-gray-900">Our Location</p>
+                    <p className="mt-1 text-gray-600">123 Perfume Street, Gulshan</p>
+                    <p className="text-gray-600">Dhaka 1212, Bangladesh</p>
+                  </div>
+                </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Phone Number</label>
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
-              />
-            </div>
+                <div className="flex items-start bg-indigo-50 p-4 rounded-lg transition-all duration-300 hover:shadow-md">
+                  <FaPhone className="flex-shrink-0 h-6 w-6 text-indigo-600" />
+                  <div className="ml-3 text-base">
+                    <p className="font-medium text-gray-900">Phone Number</p>
+                    <p className="mt-1 text-gray-600">+880 1234-567890</p>
+                  </div>
+                </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Email <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="email"
-                name="email"
-                required
-                value={formData.email}
-                onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
-              />
-            </div>
+                <div className="flex items-start bg-indigo-50 p-4 rounded-lg transition-all duration-300 hover:shadow-md">
+                  <FaEnvelope className="flex-shrink-0 h-6 w-6 text-indigo-600" />
+                  <div className="ml-3 text-base">
+                    <p className="font-medium text-gray-900">Email Address</p>
+                    <p className="mt-1 text-gray-600">info@scentzone.com</p>
+                  </div>
+                </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Comment <span className="text-red-500">*</span>
-              </label>
-              <textarea
-                name="comment"
-                required
-                value={formData.comment}
-                onChange={handleChange}
-                rows={4}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="w-full sm:w-auto px-6 py-3 bg-teal-600 text-white font-medium rounded hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
-            >
-              Submit Contact
-            </button>
-          </form>
-        </div>
-
-        {/* Contact Information */}
-        <div className="space-y-8">
-          <h2 className="text-2xl font-semibold">Contact</h2>
-          
-          <div className="space-y-4">
-            <div className="flex items-start space-x-3">
-              <MapPin className="w-5 h-5 text-teal-600 mt-1" />
-              <div>
-                <p className="font-medium">Address: F7 (Lift-6), Tower71, ECB Chattar,</p>
-                <p>Matikata Rd Dhaka-1206</p>
+                <div className="flex items-start bg-indigo-50 p-4 rounded-lg transition-all duration-300 hover:shadow-md">
+                  <FaClock className="flex-shrink-0 h-6 w-6 text-indigo-600" />
+                  <div className="ml-3 text-base">
+                    <p className="font-medium text-gray-900">Business Hours</p>
+                    <p className="mt-1 text-gray-600">Monday - Saturday: 10:00 AM - 8:00 PM</p>
+                    <p className="text-gray-600">Sunday: 12:00 PM - 6:00 PM</p>
+                  </div>
+                </div>
               </div>
-            </div>
 
-            <div className="flex items-center space-x-3">
-              <Phone className="w-5 h-5 text-teal-600" />
-              <p>TEXT: +880 1710-724266</p>
-            </div>
+              <div className="md:w-1/2 md:pl-8">
+                <div className="rounded-lg overflow-hidden shadow-md">
+                  <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.0141601255644!2d90.41279631498074!3d23.78014478457481!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c7a0f7fb6f3f%3A0x32d2d6f5a4a5a0c5!2sGulshan%2C%20Dhaka%2C%20Bangladesh!5e0!3m2!1sen!2sus!4v1623345678901!5m2!1sen!2sus" 
+                    width="100%" 
+                    height="300" 
+                    style={{border:0}} 
+                    allowFullScreen="" 
+                    loading="lazy">
+                  </iframe>
+                </div>
 
-            <div className="flex items-center space-x-3">
-              <Mail className="w-5 h-5 text-teal-600" />
-              <p>support@bongofurniture.com</p>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <p className="font-medium">Office Address:</p>
-            <p>F7 (Lift-6), Tower71, ECB Chattar, Matikata Rd Dhaka-1206</p>
-          </div>
-
-          <div className="space-y-2">
-            <p className="font-medium">Factory Address:</p>
-            <p>Plot-1739, Block-F, Road-8/8 Shapufta AM Housing; Pallabi PS; Dhaka-1216; Bangladesh</p>
-          </div>
-
-          <div className="space-y-4">
-            <h3 className="font-medium">Opening Hours:</h3>
-            <div className="flex items-center space-x-3">
-              <Clock className="w-5 h-5 text-teal-600" />
-              <div>
-                <p>SAT to THU: 9:00AM - 8:00PM</p>
-                <p>FRI: 9:00AM - 12:00PM & 2:00PM - 8:00PM</p>
+                <div className="mt-8">
+                  <h2 className="text-xl font-semibold text-gray-900 mb-4">Follow Us</h2>
+                  <div className="flex space-x-6">
+                    <a href="#" className="text-gray-400 hover:text-indigo-600 transition-colors duration-300">
+                      <span className="sr-only">Facebook</span>
+                      <FaFacebookF className="h-8 w-8" />
+                    </a>
+                    <a href="#" className="text-gray-400 hover:text-pink-600 transition-colors duration-300">
+                      <span className="sr-only">Instagram</span>
+                      <FaInstagram className="h-8 w-8" />
+                    </a>
+                    <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors duration-300">
+                      <span className="sr-only">Twitter</span>
+                      <FaTwitter className="h-8 w-8" />
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Brand Section */}
-      <div className="mt-16 text-center space-y-4">
-        <h2 className="text-2xl font-bold">Know more about the brand</h2>
-        <p>Explore more about Bongo Furniture by visiting our website.</p>
-        <p>Enjoy every moment with our premium-quality pieces, thoughtfully designed to enhance your well-being</p>
-      </div>
-    </div>
+    </ScrollToTop>
   );
-}
+};
+
+export default ContactPage;

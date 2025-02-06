@@ -18,22 +18,22 @@ const RefundPolicyModal = ({ isOpen, onClose }) => {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-            className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-hidden"
+            className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-hidden text-black"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center p-6 border-b">
-              <h2 className="text-2xl font-bold text-gray-800">Refund Policy</h2>
+              <h2 className="text-2xl font-bold ">Refund Policy</h2>
               <button
                 onClick={onClose}
-                className="text-gray-500 hover:text-gray-700 transition-colors"
+                className="  transition-colors"
               >
                 <FiX size={24} />
               </button>
             </div>
             <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
-              <h3 className="text-xl font-semibold mb-4">Pramanik Furniture Refund Policy</h3>
+              <h3 className="text-xl font-semibold mb-4">Scent Zone Refund Policy</h3>
               <p className="mb-4">
-                We appreciate your business at Pramanik Furniture! We want to ensure you're happy with your purchase. 
+                We appreciate your business at Scent Zone! We want to ensure you're happy with your purchase. 
                 This policy outlines the conditions for refunds and exchanges.
               </p>
 

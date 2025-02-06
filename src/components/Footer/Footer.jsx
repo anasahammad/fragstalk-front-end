@@ -1,6 +1,24 @@
+import { useState } from 'react';
 import { FaFacebookF, FaInstagram, FaPinterestP, FaYoutube, FaTwitter, FaSprayCan } from 'react-icons/fa';
+import RefundPolicyModal from '../RefundPolicyModal';
+import ShippingPolicyModal from '../ShipingPolicyModal';
+import PrivacyPolicyModal from '../PrivacyPolicyModal';
+import TermsOfServiceModal from '../TermsOfServiceModal';
 
 const Footer = () => {
+  const [isOpen, setIsOpen] = useState(false)
+     const [isModalOpen, setIsModalOpen] = useState(false);
+      const [isShippingModalOpen, setIsShippingModalOpen] = useState(false);
+      const [isPrivacyPolicyModalOpen, setIsPrivacyPolicyModalOpen] = useState(false);
+      const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
+      const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+    const openShipingModal = () => setIsShippingModalOpen(true);
+    const closeShipingModal = () => setIsShippingModalOpen(false);
+    const openPrivacyPolicyModal = () => setIsPrivacyPolicyModalOpen(true);
+    const closePrivacyPolicyModal = () => setIsPrivacyPolicyModalOpen(false);
+    const openTermsModal = () => setIsTermsModalOpen(true);
+    const closeTermsModal = () => setIsTermsModalOpen(false);
   return (
     <footer className="w-full bg-[#192229] text-gray-100 -mb-10">
       {/* Newsletter Section */}
@@ -49,18 +67,43 @@ const Footer = () => {
           <div>
             <h3 className="font-bold text-lg mb-4">The Company</h3>
             <ul className="space-y-2">
-              {[
-                'About Scent Zone',
-                'Our Perfumers',
-                'Privacy Policy',
-                'Return & Refund Policy',
-                'Shipping Policy',
-                'Terms Of Service'
-              ].map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-sm hover:underline hover:text-pink-500">{item}</a>
+              
+              
+                
+                
+               
+             
+                <li >
+                  <a href="#" className="text-sm hover:underline hover:text-pink-500">
+                  About Scent Zone
+                  </a>
                 </li>
-              ))}
+                <li >
+                  <a href="#" className="text-sm hover:underline hover:text-pink-500">
+                  Our Perfumers
+                  </a>
+                </li>
+                <li >
+                  <button onClick={()=>setIsPrivacyPolicyModalOpen(true)} className="text-sm hover:underline hover:text-pink-500">
+                  Privacy Policy
+                  </button>
+                </li>
+                <li >
+                  <button onClick={()=>setIsModalOpen(true)} className="text-sm hover:underline hover:text-pink-500">
+                  Return & Refund Policy
+                  </button>
+                </li>
+                <li >
+                  <button onClick={()=>setIsShippingModalOpen(true)} className="text-sm hover:underline hover:text-pink-500">
+                  Shipping Policy
+                  </button>
+                </li>
+                <li >
+                  <button onClick={()=>setIsTermsModalOpen(true)} className="text-sm hover:underline hover:text-pink-500">
+                  Terms Of Service
+                  </button>
+                </li>
+             
             </ul>
           </div>
 
@@ -75,7 +118,7 @@ const Footer = () => {
                 'Gift Cards'
               ].map((item) => (
                 <li key={item}>
-                  <a href="#" className="text-sm hover:underline hover:text-pink-500">{item}</a>
+                  <a href="/contact" className="text-sm hover:underline hover:text-pink-500">{item}</a>
                 </li>
               ))}
             </ul>
@@ -107,6 +150,12 @@ const Footer = () => {
       <div className="bg-indigo-950 text-white py-4 text-center text-sm">
         <p>© {new Date().getFullYear()} Scent Zone. All Rights Reserved</p>
       </div>
+      <RefundPolicyModal isOpen={isModalOpen} onClose={closeModal} />
+        <ShippingPolicyModal isOpen={isShippingModalOpen} onClose={closeShipingModal} />
+
+        <PrivacyPolicyModal isOpen={isPrivacyPolicyModalOpen} onClose={closePrivacyPolicyModal} />
+
+        <TermsOfServiceModal isOpen={isTermsModalOpen} onClose={closeTermsModal} />
     </footer>
   );
 };

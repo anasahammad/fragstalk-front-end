@@ -1,90 +1,91 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FiEdit2, FiTrash2, FiToggleLeft, FiToggleRight } from 'react-icons/fi';
+import { FiEdit2, FiTrash2, FiToggleLeft, FiToggleRight, FiUpload, FiLink } from 'react-icons/fi';
 
 // Cloudinary configuration
-const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/drbtvputr/image/upload';
-const CLOUDINARY_UPLOAD_PRESET = 'rowshanara';
-
+const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dobkpdw6z/image/upload';
+const CLOUDINARY_UPLOAD_PRESET = 'auroraxiaDev';
 
 
 const CategoryPage = () => {
-  const [categories, setCategories] = useState([]);
-  const [newCategory, setNewCategory] = useState({ name: '', description: '', image: null });
+  const [category, setCategory] = useState([]);
+  const [newCategory, setNewCategory] = useState({ name: '', description: '', image: '', isActive: true });
   const [editingCategory, setEditingCategory] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
-    fetchCategories();
+    fetchCategory();
   }, []);
 
-  const fetchCategories = async () => {
+  const fetchCategory = async () => {
     try {
       const response = await axios.get(`${import.meta.env.VITE_API_URL}/category`);
-      setCategories(response.data);
+      setCategory(response.data);
     } catch (error) {
-      console.error('Error fetching categories:', error);
+      console.error('Error fetching category:', error);
     }
   };
 
-  const uploadImage = async (file) => {
+  const handleImageUpload = async (file) => {
+    setIsUploading(true);
     const formData = new FormData();
     formData.append('file', file);
     formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-    const response = await axios.post(CLOUDINARY_URL, formData);
-    return response.data.secure_url;
-  };
-
-  const handleAddCategory = async (e) => {
-    e.preventDefault();
     try {
-      let imageUrl = newCategory.image;
-      if (newCategory.image instanceof File) {
-        imageUrl = await uploadImage(newCategory.image);
-      }
-      await axios.post(`${import.meta.env.VITE_API_URL}/category`, { ...newCategory, image: imageUrl });
-      setNewCategory({ name: '', description: '', image: null });
-      fetchCategories();
+      const response = await axios.post(CLOUDINARY_URL, formData);
+      setIsUploading(false);
+      return response.data.secure_url;
     } catch (error) {
-      console.error('Error adding category:', error);
+      console.error('Error uploading image:', error);
+      setIsUploading(false);
+      return null;
     }
   };
 
-  const handleEditCategory = async (e) => {
+  const handleSubmit = async (e, aroma, isEditing = false) => {
     e.preventDefault();
-    if (!editingCategory) return;
     try {
-      let imageUrl = editingCategory.image;
-      if (editingCategory.image instanceof File) {
-        imageUrl = await uploadImage(editingCategory.image);
+      let imageUrl = aroma.image;
+      if (aroma.image instanceof File) {
+        imageUrl = await handleImageUpload(aroma.image);
       }
-      await axios.put(`${import.meta.env.VITE_API_URL}/category/${editingCategory._id}`, { ...editingCategory, image: imageUrl });
+      const aromaData = { ...aroma, image: imageUrl };
+      if (isEditing) {
+        await axios.put(`${import.meta.env.VITE_API_URL}/category/${aroma._id}`, aromaData);
+      } else {
+        await axios.post(`${import.meta.env.VITE_API_URL}/category`, aromaData);
+      }
+      fetchCategory();
+      setNewCategory({ name: '', description: '', image: '', isActive: true });
       setEditingCategory(null);
-      fetchCategories();
     } catch (error) {
-      console.error('Error updating category:', error);
+      console.error('Error submitting aroma:', error);
     }
   };
 
-  const handleDeleteCategory = async (categoryId) => {
+  const handleDelete = async (id) => {
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/category/${categoryId}`);
-      fetchCategories();
+      await axios.delete(`${import.meta.env.VITE_API_URL}/category/${id}`);
+      fetchCategory();
     } catch (error) {
-      console.error('Error deleting category:', error);
+      console.error('Error deleting aroma:', error);
     }
   };
 
-  const handleToggleActive = async (category) => {
+  const handleToggleActive = async (aroma) => {
     try {
-      await axios.put(`${import.meta.env.VITE_API_URL}/category/${category._id}`, { ...category, isActive: !category.isActive });
-      fetchCategories();
+      await axios.put(`${import.meta.env.VITE_API_URL}/category/${aroma._id}`, {
+        ...aroma,
+        isActive: !aroma.isActive
+      });
+      fetchCategory();
     } catch (error) {
-      console.error('Error toggling category active status:', error);
+      console.error('Error toggling aroma active status:', error);
     }
   };
 
   const handleImageChange = (e, setter) => {
-    const file = e.target.files?.[0];
+    const file = e.target.files[0];
     if (file) {
       setter(prevState => ({ ...prevState, image: file }));
     }
@@ -94,98 +95,99 @@ const CategoryPage = () => {
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Category Management</h1>
 
-      {/* Add New Category Form */}
-      <form onSubmit={handleAddCategory} className="mb-8 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <h2 className="text-2xl font-bold mb-4">Add New Category</h2>
+      {/* Add/Edit Aroma Form */}
+      <form onSubmit={(e) => handleSubmit(e, editingCategory || newCategory, !!editingCategory)} className="mb-8 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h2 className="text-2xl font-bold mb-4">{editingCategory ? 'Edit Aroma' : 'Add New Category'}</h2>
         <div className="mb-4">
           <input
             type="text"
             placeholder="Category Name"
-            value={newCategory.name}
-            onChange={(e) => setNewCategory({ ...newCategory, name: e.target.value })}
+            value={editingCategory ? editingCategory.name : newCategory.name}
+            onChange={(e) => editingCategory ? setEditingCategory({...editingCategory, name: e.target.value}) : setNewCategory({...newCategory, name: e.target.value})}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
           />
         </div>
         <div className="mb-4">
-          <input
-            type="text"
+          <textarea
             placeholder="Description"
-            value={newCategory.description}
-            onChange={(e) => setNewCategory({ ...newCategory, description: e.target.value })}
+            value={editingCategory ? editingCategory.description : newCategory.description}
+            onChange={(e) => editingCategory ? setEditingCategory({...editingCategory, description: e.target.value}) : setNewCategory({...newCategory, description: e.target.value})}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            rows="3"
           />
         </div>
-        {/* <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="category-image">
-            Category Image
+        <div className="mb-4">
+          <div className="flex items-center">
+            <input
+              type="text"
+              placeholder="Image URL"
+              value={editingCategory ? editingCategory.image : newCategory.image}
+              onChange={(e) => editingCategory ? setEditingCategory({...editingCategory, image: e.target.value}) : setNewCategory({...newCategory, image: e.target.value})}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+            <span className="mx-2">or</span>
+            <label className="w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
+              <FiUpload className="w-8 h-8" />
+              <span className="mt-2 text-base leading-normal">Select a file</span>
+              <input
+                type='file'
+                className="hidden"
+                onChange={(e) => handleImageChange(e, editingCategory ? setEditingCategory : setNewCategory)}
+                accept="image/*"
+              />
+            </label>
+          </div>
+        </div>
+        <div className="mb-4">
+          <label className="flex items-center">
+            <input
+              type="checkbox"
+              checked={editingCategory ? editingCategory.isActive : newCategory.isActive}
+              onChange={(e) => editingCategory ? setEditingCategory({...editingCategory, isActive: e.target.checked}) : setNewCategory({...newCategory, isActive: e.target.checked})}
+              className="form-checkbox h-5 w-5 text-blue-600"
+            />
+            <span className="ml-2 text-gray-700">Active</span>
           </label>
-          <input
-            id="category-image"
-            type="file"
-            onChange={(e) => handleImageChange(e, setNewCategory)}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            accept="image/*"
-            
-          />
-        </div> */}
-        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-          Add Category
+        </div>
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          disabled={isUploading}
+        >
+          {isUploading ? 'Uploading...' : (editingCategory ? 'Update Category' : 'Add Category')}
         </button>
+        {editingCategory && (
+          <button
+            onClick={() => setEditingCategory(null)}
+            className="ml-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Cancel
+          </button>
+        )}
       </form>
 
-      {/* Categories List */}
-      <div className="space-y-6">
-        {categories.map((category) => (
-          <div key={category._id} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            {editingCategory && editingCategory._id === category._id ? (
-              <form onSubmit={handleEditCategory} className="mb-4">
-                <input
-                  type="text"
-                  value={editingCategory.name}
-                  onChange={(e) => setEditingCategory({ ...editingCategory, name: e.target.value })}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                />
-                <input
-                  type="text"
-                  value={editingCategory.description}
-                  onChange={(e) => setEditingCategory({ ...editingCategory, description: e.target.value })}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                />
-                {/* <input
-                  type="file"
-                  onChange={(e) => handleImageChange(e, setEditingCategory)}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                  accept="image/*"
-                /> */}
-                <button type="submit" className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                  Save
+      {/* category List */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {category?.map((aroma) => (
+          <div key={aroma._id} className="bg-white shadow-md rounded-lg overflow-hidden">
+            <img src={aroma.image || "/placeholder.svg"} alt={aroma?.name} className="w-full h-48 object-cover" />
+            <div className="p-4">
+              <h3 className="text-xl font-bold mb-2">{aroma?.name}</h3>
+              <p className="text-gray-700 mb-2">{aroma?.description}</p>
+              <p className="text-sm text-gray-500 mb-2">Created: {new Date(aroma?.createdAt).toLocaleDateString()}</p>
+              <div className="flex justify-between items-center">
+                <button onClick={() => setEditingCategory(aroma)} className="text-blue-500 hover:text-blue-700">
+                  <FiEdit2 />
                 </button>
-                <button onClick={() => setEditingCategory(null)} className="ml-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                  Cancel
+                <button onClick={() => handleDelete(aroma?._id)} className="text-red-500 hover:text-red-700">
+                  <FiTrash2 />
                 </button>
-              </form>
-            ) : (
-              <>
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-xl font-bold">{category.name}</h3>
-                  <div>
-                    <button onClick={() => setEditingCategory(category)} className="text-blue-500 hover:text-blue-700 mr-2">
-                      <FiEdit2 />
-                    </button>
-                    <button onClick={() => handleDeleteCategory(category._id)} className="text-red-500 hover:text-red-700 mr-2">
-                      <FiTrash2 />
-                    </button>
-                    <button onClick={() => handleToggleActive(category)} className={`text-${category.isActive ? 'green' : 'gray'}-500 hover:text-${category.isActive ? 'green' : 'gray'}-700`}>
-                      {category.isActive ? <FiToggleRight /> : <FiToggleLeft />}
-                    </button>
-                  </div>
-                </div>
-                <p className="text-gray-700 mb-2">{category.description}</p>
-                {/* <img src={category.image || "/placeholder.svg"} alt={category.name} className="w-full h-40 object-cover rounded mb-4" /> */}
-                <p className="text-sm text-gray-500">Created at: {new Date(category.createdAt).toLocaleString()}</p>
-              </>
-            )}
+                <button onClick={() => handleToggleActive(aroma)} className={`text-${aroma?.isActive ? 'green' : 'gray'}-500 hover:text-${aroma?.isActive ? 'green' : 'gray'}-700`}>
+                  {aroma?.isActive ? <FiToggleRight /> : <FiToggleLeft />}
+                </button>
+              </div>
+            </div>
           </div>
         ))}
       </div>
