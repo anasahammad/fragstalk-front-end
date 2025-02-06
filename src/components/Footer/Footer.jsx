@@ -2,7 +2,7 @@ import { FaFacebookF, FaInstagram, FaPinterestP, FaYoutube, FaTwitter, FaSprayCa
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-indigo-900 text-gray-100">
+    <footer className="w-full bg-[#192229] text-gray-100 -mb-10">
       {/* Newsletter Section */}
       <div className="container mx-auto px-4 py-8">
         <div className="text-center mb-8">
@@ -26,10 +26,10 @@ const Footer = () => {
           {/* Company Info */}
           <div>
             <div className="flex items-center mb-4">
-              <FaSprayCan className="text-pink-500 w-8 h-8 mr-2" />
+              <img src='/logo.png' className='w-8 h-8 mr-2 object-cover object-center'></img>
               <span className="text-2xl font-bold">Scent Zone</span>
             </div>
-            <p className="text-sm mb-2">123 Fragrance Lane, Aroma City, AC 12345</p>
+            <p className="text-sm mb-2">Dhaka Bangladesh</p>
             <p className="text-sm mb-2">
               Call us: <a href="tel:+1234567890" className="hover:underline">+1 (234) 567-890</a>
             </p>

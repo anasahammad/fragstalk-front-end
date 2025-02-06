@@ -3,50 +3,6 @@ import axios from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// const categories = [
-//   {
-//     id: 1,
-//     name: 'Aquatic',
-//     image: '/placeholder.svg?height=200&width=200',
-//   },
-//   {
-//     id: 2,
-//     name: 'Citrus',
-//     image: '/placeholder.svg?height=200&width=200',
-//   },
-//   {
-//     id: 3,
-//     name: 'Aromatic',
-//     image: '/placeholder.svg?height=200&width=200',
-//   },
-//   {
-//     id: 4,
-//     name: 'Woody',
-//     image: '/placeholder.svg?height=200&width=200',
-//   },
-//   {
-//     id: 5,
-//     name: 'Floral',
-//     image: '/placeholder.svg?height=200&width=200',
-//   },
-//   {
-//     id: 6,
-//     name: 'Oriental',
-//     image: '/placeholder.svg?height=200&width=200',
-//   },
-//   {
-//     id: 7,
-//     name: 'Fruity',
-//     image: '/placeholder.svg?height=200&width=200',
-//   },
-//   {
-//     id: 8,
-//     name: 'Oud',
-//     image: '/placeholder.svg?height=200&width=200',
-//   },
-// ];
-
-
 
 const ShopByNotes = () => {
 
@@ -62,8 +18,8 @@ const ShopByNotes = () => {
       <h2 className="text-center text-2xl font-bold mb-8">SHOP BY NOTES</h2>
       
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-        {data.map((category) => (
-          <div key={category._id} className="relative group cursor-pointer">
+        {data?.map((category) => (
+          <Link to={`/notes/${category._id}`}  key={category._id} className="relative group cursor-pointer">
             <div className="aspect-square relative overflow-hidden rounded-full">
               {/* Image Container */}
               <div className="w-full h-full absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
@@ -78,7 +34,7 @@ const ShopByNotes = () => {
                 {category.name}
               </Link>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

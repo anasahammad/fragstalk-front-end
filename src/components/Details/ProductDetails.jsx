@@ -45,59 +45,6 @@ const ProductDetails = () => {
   const { id } = useParams();
   const {wishlist} = useSelector((state)=>state.wishlist)
   const [orderProduct, setOrderProduct] = useState(null);
-  // const products = [
-  //   {
-  //     id: 1,
-  //     name: 'Alexandria Cloth Organizer - BFC401',
-  //     price: 13500.00,
-  //     image: 'https://i.postimg.cc/wMycKC9G/2ae7f078-0899-4cc5-ae08-a8ee33dc1930.jpg',
-  //     isNew: true,
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'Tudor Wardrobe - BFC403',
-  //     price: 14400.00,
-  //     image: 'https://i.postimg.cc/mDryjcJR/326b5366-face-4981-b089-938e98643dbb.jpg',
-  //     isNew: true,
-  //   },
-  //   {
-  //     id: 3,
-  //     name: 'Florentine Wardrobe - BFC402',
-  //     price: 16500.00,
-  //     originalPrice: 17500.00,
-  //     image: 'https://i.postimg.cc/y8qnK8gX/63257b1f-05f0-4e86-a6d9-2229d51425cb.jpg',
-  //     isNew: true,
-  //     discount: '-6%',
-  //   },
-  //   {
-  //     id: 4,
-  //     name: 'CPU Cruiser - BFA301',
-  //     price: 899.00,
-  //     image: 'https://i.postimg.cc/bvpTGVRZ/64cc0f48-7c74-4cee-b050-84f34e341002.jpg',
-  //     isNew: true,
-  //   },
-  //   {
-  //     id: 5,
-  //     name: 'Calmness Study Table - BFT012',
-  //     price: 9000.00,
-  //     image: 'https://i.postimg.cc/zDV9X3B9/8a33a04a-4040-4fa8-a3e3-9587496afefd.jpg',
-  //     isNew: true,
-  //   },
-  // ].concat(Array(10).fill().map((_, i) => ({
-  //   id: i + 6,
-  //   name: `Product ${i + 6}`,
-  //   price: 9999.00,
-  //   image: [
-  //     'https://i.postimg.cc/qRZX5JHK/8c0e6a04-d906-465e-8d0f-fa6e9ee494bb.jpg',
-  //     'https://i.postimg.cc/PrvK0wx5/a47da85e-eee0-4cb9-99a3-bcb2ee2da0f4.jpg',
-  //     'https://i.postimg.cc/6qgcy9HK/b8ea5777-1c18-46f4-b7af-e1b61feb8fe2.jpg',
-  //     'https://i.postimg.cc/rwSjw256/c3f2925d-0515-4fc9-ba23-8c9300305314.jpg',
-  //     'https://i.postimg.cc/90r1m4Y1/c9aac6fa-7c7d-4a63-84ee-fde978fcdd0d.jpg',
-  //     'https://i.postimg.cc/v8N3PzGK/d027d112-c56a-439a-a382-8615c84c1c75.jpg',
-  //     'https://i.postimg.cc/nzd0fKBC/f4cef422-b87b-44d0-9551-746c0523c1b3.jpg',
-  //   ][i % 7], // Rotates through the image array
-  //   isNew: true,
-  // })));
   
   const {data: products=[]} = useQuery({
     queryKey: 'products',
@@ -273,7 +220,7 @@ const handleReviewSubmit = async (e) => {
   }
   return (
     <ScrollToTop>
-    <div className="  p-4 bg-white mt-12">
+    <div className="  p-4 bg-white mt-12 lg:mt-20">
       <div className="grid md:grid-cols-2 gap-8">
         {/* Left Column - Product Image */}
         

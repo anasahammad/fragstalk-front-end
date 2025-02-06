@@ -9,46 +9,6 @@ import { addToWishlist, removeFromWishlist } from '../../store/actions/wishlistA
 import toast from 'react-hot-toast';
 import { addTocart } from '../../store/actions/cartAction';
 
-// const products = {
-//   bestSeller: [
-//     {
-//       id: 1,
-//       name: 'Abdul Samad Al Qurashi Safari Blue 75ml Extrait De Parfum',
-//       price: 10220.00,
-//       originalPrice: 980.00,
-//       image: '/placeholder.svg?height=300&width=300',
-//       status: ['Hot', 'Sold Out'],
-//     },
-//     // Add more best seller products...
-//   ],
-//   newArrivals: [
-//     {
-//       id: 2,
-//       name: 'Acqua Di Gio 200ml Edt For Men',
-//       price: 7999.00,
-//       originalPrice: 9999.00,
-//       image: '/placeholder.svg?height=300&width=300',
-//       status: ['Sold Out'],
-//     },
-//     {
-//       id: 3,
-//       name: 'Afnan 9PM Deodorant Spray 250ml',
-//       price: 735.00,
-//       originalPrice: 1500.00,
-//       image: '/placeholder.svg?height=300&width=300',
-//       status: ['Sale'],
-//     },
-//     {
-//       id: 4,
-//       name: 'Afnan Dehn Al Oudh Abiyad Attar 20ml For Men And Women',
-//       price: 1199.00,
-//       originalPrice: 2260.00,
-//       image: '/placeholder.svg?height=300&width=300',
-//       status: ['Hot', 'Sale'],
-//     },
-//     // Add more new arrival products...
-//   ],
-// };
 
 export const ProductCard = ({ product }) => {
   const [isWishlist, setIsWishlist] = useState(false);

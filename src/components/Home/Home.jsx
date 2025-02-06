@@ -14,7 +14,7 @@ import LuxuryHome from './LuxuryHome';
  
 const Home = () => {
     return (
-        <div className='relative'>
+        <div className=''>
             <Hero />
               {/* <Features /> */}
               {/* <Collection /> */}
