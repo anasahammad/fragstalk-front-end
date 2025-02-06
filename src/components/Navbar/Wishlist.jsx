@@ -7,13 +7,21 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import WishlistSingle from "./WishlistSingle";
+import useClickOutside from "../../hooks/useClickOutside";
 
-const Wishlist = ({ setOpenWishlist }) => {
+const Wishlist = ({ setOpenWishlist, openWishlist }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
  console.log(wishlist)
+
+ const WishlistRef = useClickOutside(() => {
+  if (openWishlist) {
+    setOpenWishlist(false);
+  }
+});
   return (
     <div className="w-full fixed h-screen top-0 left-0 z-[1000] bg-[#0000006b]">
       <motion.div
+      ref={WishlistRef}
         initial={{ opacity: 0, x: 400 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: 400 }}

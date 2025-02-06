@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { FaCloudUploadAlt, FaInfo, FaTimes, FaTrash } from "react-icons/fa";
 import toast from "react-hot-toast";
@@ -85,9 +85,9 @@ const CustomerBanner = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen p-8">
-      <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-lg p-6">
-        <div className="flex justify-between items-center mb-8">
+    <div className="bg-gray-100 min-h-screen  md:p-8">
+      <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-lg p-2 md:p-6">
+        <div className="flex md:justify-between flex-col md:flex-row md:items-center mb-8 gap-2">
           <h1 className="text-3xl font-bold text-gray-800">Cover Photo Manager</h1>
           <button
             onClick={() => setIsModalOpen(true)}

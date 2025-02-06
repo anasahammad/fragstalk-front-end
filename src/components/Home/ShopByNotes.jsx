@@ -15,7 +15,7 @@ const ShopByNotes = () => {
   })
   return (
     <div className="container mx-auto px-4 py-12">
-      <h2 className="text-center text-2xl font-bold mb-8">SHOP BY NOTES</h2>
+      <h2 className="text-center text-2xl font-bold mb-8">SHOP BY Luxury Category</h2>
       
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
         {data?.map((category) => (

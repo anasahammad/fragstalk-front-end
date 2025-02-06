@@ -101,14 +101,15 @@ const AddProductPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 py-12 px-2 md:px-8">
+      <div className="max-w-5xl mx-auto">
         <div className="bg-white shadow-2xl rounded-lg overflow-hidden">
-          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 py-6 px-8">
-            <h2 className="text-3xl font-extrabold text-white flex items-center">
-              <FiPackage className="mr-4" />
+          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 py-4 md:py-6 text-white gap-2 px-2 md:px-8">
+            <h2 className=" text-2xl md:text-3xl font-extrabold  ">
+            
               Add New Product
             </h2>
+           
           </div>
           <form onSubmit={handleSubmit(onSubmit)} className="p-8 space-y-6">
             <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">

@@ -71,7 +71,7 @@ export default function OrderDetailsPage() {
       <h1 className="text-2xl font-semibold mb-6">Order Details</h1>
       <div className="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
         <div className="px-4 py-5 sm:px-6 flex justify-between items-center flex-wrap">
-          <div>
+          <div className='md:w-[30%]'>
             <h3 className="text-lg leading-6 font-medium text-gray-900">
               Order ID: {order.orderId}
             </h3>
@@ -79,12 +79,12 @@ export default function OrderDetailsPage() {
               Placed on {new Date(order.createdAt).toLocaleDateString()}
             </p>
           </div>
-          <div className="flex items-center mt-4 sm:mt-0">
+          <div className="flex items-center flex-col md:flex-row mt-4 sm:mt-0 md:w-[55%] gap-2 px-4">
             <select
               value={order.status}
               onChange={handleStatusChange}
               disabled={updatingStatus}
-              className="mr-4 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+              className=" block w-full pl-3  py-2 text-base border-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md border "
             >
               <option value="pending">Pending</option>
               <option value="processing">Processing</option>
@@ -95,7 +95,7 @@ export default function OrderDetailsPage() {
             {(order.status === 'delivered' || order.status === 'cancelled') && (
               <button
                 onClick={handleDeleteOrder}
-                className="flex items-center gap-2 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                className="flex w-full items-center gap-2 px-2 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
               >
                 <FiTrash2 size={20} />
                 Delete Order
@@ -168,7 +168,7 @@ export default function OrderDetailsPage() {
         <ul className="divide-y divide-gray-200">
           {order.product.map((item) => (
             <li key={item._id} className="p-4 sm:p-6">
-              <div className="flex items-center space-x-4 flex-wrap sm:flex-nowrap">
+              <div className="flex flex-col md:flex-row items-center space-x-4 flex-wrap sm:flex-nowrap">
                 <div className="flex-shrink-0">
                   <img 
                     src={item.images[0] || "/placeholder.svg?height=96&width=96"} 

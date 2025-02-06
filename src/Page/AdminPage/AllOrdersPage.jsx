@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { use } from 'react';
 import { useSelector } from 'react-redux';
+import { FaEye } from 'react-icons/fa6';
 
 const AllOrdersPage = () => {
   const [orders, setOrders] = useState([]);
@@ -37,7 +38,7 @@ const AllOrdersPage = () => {
           <thead>
             <tr className="bg-gray-100">
               <th className="py-2 px-4 border-b">Order ID</th>
-              <th className="py-2 px-4 border-b">Customer Name</th>
+              <th className="py-2 px-4 border-b whitespace-nowrap">Customer Name</th>
              
               <th className="py-2 px-4 border-b">Quantity</th>
               <th className="py-2 px-4 border-b">Total Amount</th>
@@ -62,12 +63,12 @@ const AllOrdersPage = () => {
                     {order.status}
                   </span>
                 </td>
-                <td className="py-2 px-4 border-b">
+                <td className="py-2 px-6  border-b">
                   <Link 
                     to={`/admin/orders/${order._id}`} 
                     className="text-indigo-600 hover:text-indigo-900"
                   >
-                    View Details
+                    <FaEye title='View details'/>
                   </Link>
                 </td>
               </tr>

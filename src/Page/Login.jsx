@@ -98,7 +98,7 @@ const Login = () => {
       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-xl">
         <div className="text-center">
           <h1 className="text-3xl font-extrabold text-gray-800 mb-4 tracking-wide">
-            Pramanik Furniture
+            Scent Zone
           </h1>
           <p className="text-gray-700 text-lg font-medium">Log in</p>
           {step === 'email' ? (

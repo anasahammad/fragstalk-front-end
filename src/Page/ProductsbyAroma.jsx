@@ -99,12 +99,12 @@ const {data:aromas = []} = useQuery({
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      {/* <div className="relative h-64 bg-gradient-to-r from-purple-900 to-purple-700">
+      <div className="relative h-64 bg-gradient-to-r from-purple-900 to-purple-700">
         <div className="absolute inset-0 bg-black/30" />
         <div className="relative z-10 flex items-center justify-center h-full">
           <h1 className="text-4xl font-bold text-white">Men</h1>
         </div>
-      </div> */}
+      </div>
 
       {/* Filters and Sort */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">

@@ -1,6 +1,4 @@
-
-
-import  { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import Sidebar from "../components/AdminDashboard/Sidebar";
@@ -10,12 +8,23 @@ const AdminDashboard = () => {
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setSidebarOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex flex-col lg:flex-row min-h-screen bg-gray-100">
       <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
       
-      <div className="flex-1 flex flex-col lg:ml-64">
-        <header className="bg-white shadow-md p-4 flex justify-between items-center sticky top-0 z-10">
+      <div className="flex-1 flex flex-col">
+        <header className="bg-white shadow-md p-4 flex justify-between items-center sticky top-0 z-20">
           <button className="lg:hidden text-gray-600 focus:outline-none" onClick={toggleSidebar}>
             {sidebarOpen ? <FiX size={24} /> : <FiMenu size={24} />}
           </button>
@@ -26,7 +35,7 @@ const AdminDashboard = () => {
         </header>
         
         <main className="flex-1 p-4 sm:p-6 overflow-x-hidden">
-          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 min-h-[calc(100vh-8rem)]">
+          <div className="bg-white rounded-lg shadow-lg p-2 sm:p-6 min-h-[calc(100vh-8rem)]">
             <Outlet />
           </div>
         </main>

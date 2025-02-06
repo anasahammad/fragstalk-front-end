@@ -228,7 +228,7 @@ export default function ProfilePage() {
         <p className="text-gray-600">Email: {user?.email}</p>
       </div>
 
-      <div className="bg-white rounded-lg shadow p-6">
+      <div className="bg-white rounded-lg shadow p-3">
         <div className="flex justify-between mb-6">
           <h2 className="text-xl font-semibold">Addresses</h2>
           <button
@@ -236,7 +236,7 @@ export default function ProfilePage() {
               setEditingAddress(null);
               setIsAddressModalOpen(true);
             }}
-            className="flex items-center gap-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700"
+            className="flex items-center gap-2 bg-blue-600 text-white py-2 px-2 rounded-md hover:bg-blue-700"
           >
             <FiPlus /> Add Address
           </button>
