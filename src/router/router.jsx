@@ -23,6 +23,7 @@ import ReviewManagementPage from "../Page/AdminPage/ReviewManagementPage";
 import ProductByCategory from "../Page/ProductByCategory";
 import ProductsByAroma from "../Page/productsbyAroma";
 import CustomerBanner from "../Page/AdminPage/CustomerBanner";
+import ProductsByBrands from "../Page/ProductsByBrands";
 
  
 const router = createBrowserRouter([
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
       {path:"/page/helpcenter", element:<HelpCenter/> },
       {path:"/categories/:id", element:<ProductByCategory/> },
       {path:"/notes/:id", element:<ProductsByAroma/> },
+      {path: "/brands/:id", element: <ProductsByBrands/>},
       {path:"/page/contactus", element:<ContactPage/>},
       {path:"/page/login", element:<Login/> }
     ],
